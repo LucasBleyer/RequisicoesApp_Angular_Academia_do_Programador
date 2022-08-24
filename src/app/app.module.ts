@@ -12,11 +12,14 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationService } from './auth/services/authentication.service';
+import { PainelComponent } from './painel/painel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    PainelComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AngularFireAuthModule,
     AngularFirestoreModule
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

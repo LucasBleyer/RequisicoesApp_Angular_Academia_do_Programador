@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, EmailValidator, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { clippingParents } from '@popperjs/core';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +13,40 @@ export class LoginComponent implements OnInit {
 
   public form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private FormBuilder: FormBuilder,
+    private AuthService: AuthenticationService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
+    this.form = this.FormBuilder.group({
       email: new FormControl(""),
       password: new FormControl(""),
     })
   }
 
-  public login(): void{
-    const email: AbstractControl | null = this.form.get("email");
-    const password: AbstractControl | null = this.form.get("password");
+  get email(): AbstractControl | null{
+    return this.form.get("email");
+  }
 
-    console.log(email?.value);
-    console.log(password?.value);
+  get password(): AbstractControl | null{
+    return this.form.get("password");
+  }
+
+  public async login(){
+    const email = this.email?.value
+    const password = this.password?.value;
+
+    try{
+      const resposta = await this.AuthService.login(email, password);
+
+      if(resposta?.user){
+        this.router.navigate(["/painel"])
+      }
+    }
+    catch(error){
+      console.error()
+    }
   }
 }
