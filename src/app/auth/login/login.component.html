@@ -5,15 +5,23 @@
         <div class="card-body ">
           <h1 class="card-title text-primary text-center">Sistema de Requisições</h1>
 
-          <form class="col-md-8 mx-auto fs-5">
+          <form class="col-md-8 mx-auto fs-5" [formGroup]="form" (ngSubmit)="login()">
             <div class="form-group mt-5">
               <label for="email" class="form-label text-primary">Email:</label>
-              <input type="email" class="form-control" placeholder="Digite seu email...">
+              <input
+              formControlName="email"
+              type="email"
+              class="form-control"
+              placeholder="Digite seu email...">
             </div>
 
             <div class="form-group mt-5">
               <label for="senha" class="form-label text-primary">Senha:</label>
-              <input type="password" class="form-control" placeholder="Digite sua senha...">
+              <input
+              formControlName="password"
+              type="password"
+              class="form-control"
+              placeholder="Digite sua senha...">
             </div>
 
             <div class="d-grid mx-4 gap-2 mt-5">
@@ -21,7 +29,6 @@
                 <i class="pi pi-sign-in me-1"></i>Login
               </button>
             </div>
-
           </form>
 
         </div>
