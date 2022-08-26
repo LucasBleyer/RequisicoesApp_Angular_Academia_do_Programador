@@ -45,19 +45,34 @@
 </div>
 
 <ng-template #content let-modal>
+
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    <h4 class="modal-title text-danger" id="modal-basic-title">Recuperação de Conta</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
   </div>
+
   <div class="modal-body">
-    <form>
-      <div class="mb-3">
-        <label for="dateOfBirth">Date of birth</label>
-        <div class="input-group">
-          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-          <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-        </div>
+
+    <form [formGroup]="formRecuperacao" (ngSubmit)="modal.close('enviar')">
+
+      <div class="alert alert-warnign" role="alert">
+        Enviaremos um email para o endereço informado com instruções de recuperação!
       </div>
+
+      <div class="form-group mb-3">
+        <label for="emailRecuperacao" class="form-label">Endereço de email:</label>
+        <input formControlName="emailRecuperacao"
+          class="form-control"
+          type="email"
+          placeholder="Digiete o endereço de email">
+
+          <div class="invalid-tooltip" *ngIf="emailRecuperacao.invalid">
+            <span *ngIf="emailRecuperacao.errors['required']">O email é obrigatório!</span>
+            <span *ngIf="emailRecuperacao.errors['email']">O email precisa estar no formato válido</span>
+          </div>
+
+      </div>
+
     </form>
   </div>
   <div class="modal-footer">
