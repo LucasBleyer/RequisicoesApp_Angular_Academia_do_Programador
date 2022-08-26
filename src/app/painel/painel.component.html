@@ -1,1 +1,25 @@
-<p>painel works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-8 col-lg-9 mx-auto">
+        <div class="card my-5 p-1 p-md-3 mx-auto">
+          <div class="p-2 pt-5 p-md-5 mb-4 rounded-3">
+            <div class="container">
+
+              <h1 class="display-6 fw-bold">
+                Olá {{ emailUsuario }}!
+              </h1>
+
+              <p class="fs-4 mt-4">
+                Seja bem-vindo ao Sistema de Requisições do <span class="text-danger">Lucas Bleyer</span>
+              </p>
+
+              <div class="d-grid d-lg-flex text-center gap-2 mt-5">
+                <button type="button" class="btn btn-outline-danger col-1" (click)="sair()">Sair</button>
+                <button type="button" class="btn btn-danger">Gerenciar Departamentos</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
