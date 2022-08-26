@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, EmailValidator, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { clippingParents } from '@popperjs/core';
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private FormBuilder: FormBuilder,
     private AuthService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -49,4 +51,13 @@ export class LoginComponent implements OnInit {
       console.error()
     }
   }
+
+  public abrirModalRecuperacao(modal: TemplateRef<any>){
+    this.modalService.open(modal)
+      .result
+      .then(resultado => {
+        console.log(resultado)
+      })
+  }
+
 }
