@@ -2,7 +2,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, EmailValidator, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { clippingParents } from '@popperjs/core';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -13,6 +12,7 @@ import { AuthenticationService } from '../services/authentication.service';
 export class LoginComponent implements OnInit {
 
   public form: FormGroup;
+  public formRecuperacao: FormGroup;
 
   constructor(
     private FormBuilder: FormBuilder,
@@ -26,6 +26,10 @@ export class LoginComponent implements OnInit {
       email: new FormControl(""),
       password: new FormControl(""),
     })
+
+    this.formRecuperacao = this.FormBuilder.group({
+      emailRecuperacao: new FormControl("")
+    })
   }
 
   get email(): AbstractControl | null{
@@ -34,6 +38,10 @@ export class LoginComponent implements OnInit {
 
   get password(): AbstractControl | null{
     return this.form.get("password");
+  }
+
+  get emailRecuperacao(){
+    return this.formRecuperacao.get("emailRecuperacao");
   }
 
   public async login(){
@@ -56,8 +64,12 @@ export class LoginComponent implements OnInit {
     this.modalService.open(modal)
       .result
       .then(resultado => {
-        console.log(resultado)
+        if(resultado === "enviar"){
+          this.AuthService.resetarSenha(this.emailRecuperacao?.value)
+        }
       })
+      .catch(() => {
+        this.formRecuperacao.get("emailRecuperacao")?.reset();
+      });
   }
-
 }

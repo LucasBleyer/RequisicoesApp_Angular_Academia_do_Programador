@@ -17,4 +17,8 @@ export class AuthenticationService {
   public login(email: string, password: string) : Promise<firebase.auth.UserCredential>{
     return this.auth.signInWithEmailAndPassword(email, password);
   }
-} 
+
+  public resetarSenha(email: string): Promise<void>{
+    return this.auth.sendPasswordResetEmail(email)
+  }
+}
