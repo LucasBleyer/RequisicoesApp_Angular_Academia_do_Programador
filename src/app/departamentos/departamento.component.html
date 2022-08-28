@@ -1,8 +1,36 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 col-md-10 col-lg-9 mx-auto">
+    <div class="col-12 col-md-10 col-lg-9 mt-5 mx-auto">
+
       <div class="text-center text-md-start">
-        <h1 class="text-danger fw-bold">Departamentos</h1>
+        <h1 class="text-light fw-bold">Departamentos</h1>
+      </div>
+
+      <div class="d-grid gap-2 d-md-block mt-4">
+        <button
+        type="button"
+        class="btn btn-light me-md-1 col-md-2 text-danger">
+        <i class="pi pi-user-plus me-2"></i>
+        Novo
+        </button>
+
+        <a
+        type="button"
+        class="btn btn-light me-md-1 col-md-2 text-danger"
+        routerLink="/painel">
+        Voltar
+        </a>
+      </div>
+      <div class="mt-5">
+        <table class="table table-light table-striped table-hover">
+          <thead class="text-danger">
+            <tr class="text-center">
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
   </div>
