@@ -30,6 +30,26 @@
               <th>Ações</th>
             </tr>
           </thead>
+          <tbody class="text-center">
+            <tr *ngFor="let departamento of (departamentos$ | async)">
+              <td>{{departamento.nome}}</td>
+              <td>{{departamento.telefone}}</td>
+              <td class="d-grid d-md-block">
+                <button
+                type="button"
+                class="btn btn-danger me-0 me-md-1 mb-md-auto"
+                >
+                <i class="pi pi-user-edit"></i>
+                </button>
+                <button
+                type="button"
+                class="btn btn-danger"
+                >
+                <i class="pi pi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
