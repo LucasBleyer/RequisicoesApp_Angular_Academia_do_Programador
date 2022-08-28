@@ -5,11 +5,11 @@
       <span class="badge bg-danger txt-bg-light">App</span>
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button (click)="estaColapsada = !estaColapsada" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" [ngbCollapse]="!estaColapsada">
 
       <div class="links fw-semibold w-100" *ngIf="usuarioLogado | async">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -17,7 +17,7 @@
             <a class="nav-link active text-danger" aria-current="page" routerLink="/departamentos">Departamentos</a>
           </li>
           <div class="ms-auto">
-            <a role="button" class="btn btn-danger px-5" (click)="sair()">
+            <a role="button" class="btn btn-danger px-3" (click)="sair()">
               <i class="pi pi-sign-out"> Sair</i>
             </a>
           </div>

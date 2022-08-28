@@ -11,6 +11,7 @@ import { AuthenticationService } from '../auth/services/authentication.service';
 })
 export class NavbarComponent implements OnInit {
   public usuarioLogado: Observable<firebase.User | null>
+  public estaColapsada: Boolean = false;
 
   constructor(
     private authService: AuthenticationService,
