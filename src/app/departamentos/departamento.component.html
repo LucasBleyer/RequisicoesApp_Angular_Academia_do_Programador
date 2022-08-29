@@ -44,6 +44,7 @@
                 <i class="pi pi-user-edit"></i>
                 </button>
                 <button
+                (click)="remover(departamento)"
                 type="button"
                 class="btn btn-danger"
                 >
@@ -68,7 +69,7 @@
     <div class="modal-body">
 
       <div class="form-group mb-3">
-        <label for="nome" class="form-label">Nome do departamento:</label>
+        <label for="nome" class="form-label">{{tituloModal}} de departamento:</label>
         <input formControlName="nome"
         class="form-control border-danger"
         type="text"

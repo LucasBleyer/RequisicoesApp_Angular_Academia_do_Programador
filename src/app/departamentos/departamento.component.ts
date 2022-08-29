@@ -7,8 +7,7 @@ import { DepartamentoService } from './services/departamento.service';
 
 @Component({
   selector: 'app-departamento',
-  templateUrl: './departamento.component.html',
-  styleUrls: ['./departamento.component.css']
+  templateUrl: './departamento.component.html'
 })
 export class DepartamentoComponent implements OnInit {
 
@@ -30,6 +29,14 @@ export class DepartamentoComponent implements OnInit {
       nome: new FormControl(""),
       telefone: new FormControl("")
     })
+  }
+
+  get tituloModal(): string{
+    return this.id?.value ? "Atualização" : "Cadastro";
+  }
+
+  get id(){
+    return this.form.get("id");
   }
 
   get nome(){
@@ -61,6 +68,10 @@ export class DepartamentoComponent implements OnInit {
     catch(error){
       console.log(error);
     }
+  }
+
+  public remover(departamento: Departamento){
+    this.departamentoService.excluir(departamento);
   }
 
 }
