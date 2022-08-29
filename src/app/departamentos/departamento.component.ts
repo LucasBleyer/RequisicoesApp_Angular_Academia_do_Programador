@@ -31,7 +31,7 @@ export class DepartamentoComponent implements OnInit {
     })
   }
 
-  get tituloModal(): string{
+  get tituloModal():string {
     return this.id?.value ? "Atualização" : "Cadastro";
   }
 

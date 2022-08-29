@@ -62,14 +62,14 @@
 
 <ng-template #modal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" class="text-danger">Cadastrar novo Departamento</h4>
+    <h4 class="modal-title" id="modal-basic-title" class="text-danger">{{tituloModal}} de Departamento</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Fechar')"></button>
   </div>
   <form [formGroup]="form" (ngSubmit)="modal.close('cadastrar')">
     <div class="modal-body">
 
       <div class="form-group mb-3">
-        <label for="nome" class="form-label">{{tituloModal}} de departamento:</label>
+        <label for="nome" class="form-label">Nome do departamento:</label>
         <input formControlName="nome"
         class="form-control border-danger"
         type="text"
