@@ -8,6 +8,7 @@
 
       <div class="d-grid gap-2 d-md-block mt-4">
         <button
+        (click)="cadastrar(modal)"
         type="button"
         class="btn btn-light me-md-1 col-md-2 text-danger">
         <i class="pi pi-user-plus me-2"></i>
@@ -36,6 +37,7 @@
               <td>{{departamento.telefone}}</td>
               <td class="d-grid d-md-block">
                 <button
+                (click)="cadastrar(modal, departamento)"
                 type="button"
                 class="btn btn-danger me-0 me-md-1 mb-md-auto"
                 >
@@ -55,3 +57,37 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" class="text-danger">Cadastrar novo Departamento</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Fechar')"></button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="modal.close('cadastrar')">
+    <div class="modal-body">
+
+      <div class="form-group mb-3">
+        <label for="nome" class="form-label">Nome do departamento:</label>
+        <input formControlName="nome"
+        class="form-control border-danger"
+        type="text"
+        placeholder="Digite o nome do seu departamento...">
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="telefone" class="form-label">Telefone do departamento:</label>
+        <input formControlName="telefone"
+        class="form-control border-danger"
+        type="text"
+        placeholder="Digite o número de telefone do seu departamento...">
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
+        <button type="submit" class="btn btn-danger col-md-3">Cadastrar</button>
+      </div>
+
+    </div>
+  </form>
+</ng-template>

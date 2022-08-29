@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { DepartamentoRoutingModule } from './departamento-routing.module';
 import { DepartamentoComponent } from './departamento.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { DepartamentoComponent } from './departamento.component';
   ],
   imports: [
     CommonModule,
-    DepartamentoRoutingModule
+    DepartamentoRoutingModule,
+
+    ReactiveFormsModule,
+    NgbModule
   ]
 })
 export class DepartamentoModule { }
