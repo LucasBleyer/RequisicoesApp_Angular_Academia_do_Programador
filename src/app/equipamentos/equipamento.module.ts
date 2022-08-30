@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { EquipamentoRoutingModule } from './equipamento-routing.module';
 import { EquipamentoComponent } from './equipamento.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { EquipamentoComponent } from './equipamento.component';
   ],
   imports: [
     CommonModule,
-    EquipamentoRoutingModule
+    EquipamentoRoutingModule,
+
+    ReactiveFormsModule,
+    NgbModule
   ]
 })
 export class EquipamentoModule { }
