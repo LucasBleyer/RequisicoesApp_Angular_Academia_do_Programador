@@ -83,10 +83,10 @@ export class EquipamentoComponent implements OnInit {
     }
   }
 
-  public async remover(departamento: Equipamento){
+  public async remover(equipamento: Equipamento){
 
     try{
-      await this.equipamentoService.excluir(departamento);
+      await this.equipamentoService.excluir(equipamento);
 
       this.toastrService.success("O equipamento foi excluido com sucesso!", "Gerenciamento de Equipamentos");
     }
