@@ -37,8 +37,8 @@
             <tr *ngFor="let equipamento of (equipamentos$ | async)">
               <td>{{equipamento.numeroSerie}}</td>
               <td>{{equipamento.nome}}</td>
-              <td>{{equipamento.preco}}</td>
-              <td>{{equipamento.dataFabricacao}}</td>
+              <td>{{equipamento.preco | currency : 'BRL'}}</td>
+              <td>{{equipamento.dataFabricacao | date: 'dd/MM/yyyy'}}</td>
               <td class="d-grid d-md-block">
                 <button
                 (click)="cadastrar(modal, equipamento)"
@@ -91,17 +91,17 @@
       <div class="form-group mb-3">
         <label for="preco" class="form-label">Preço de Aquisição do equipamento:</label>
         <input formControlName="preco"
+        currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
         class="form-control border-danger"
-        type="number"
-        placeholder="Digite o preço do equipamento...">
+        type="text"
+        placeholder="R$ 0,00">
       </div>
 
       <div class="form-group mb-3">
         <label for="dataFabricacao" class="form-label">Data de Fabricação do equipamento:</label>
         <input formControlName="dataFabricacao"
         class="form-control border-danger"
-        type="date"
-        placeholder="Informe a data de fabricação...">
+        type="date">
       </div>
 
       <div class="modal-footer">
