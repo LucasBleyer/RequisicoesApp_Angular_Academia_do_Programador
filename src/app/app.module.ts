@@ -21,6 +21,9 @@ import { EquipamentoModule } from './equipamentos/equipamento.module';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core'
+import { ToastrModule } from 'ngx-toastr';
+
+import{ BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(ptBr);
 
@@ -41,7 +44,12 @@ registerLocaleData(ptBr);
     AngularFirestoreModule,
 
     DepartamentoModule,
-    EquipamentoModule
+    EquipamentoModule,
+
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    BrowserAnimationsModule
   ],
   providers: [
     AuthenticationService,

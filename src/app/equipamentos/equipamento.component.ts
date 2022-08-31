@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { DepartamentoService } from '../departamentos/services/departamento.service';
 import { Equipamento } from './models/equipamento.models';
 import { EquipamentoService } from './service/equipamento.service';
 
@@ -18,7 +18,8 @@ export class EquipamentoComponent implements OnInit {
   constructor(
     private equipamentoService: EquipamentoService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -74,13 +75,24 @@ export class EquipamentoComponent implements OnInit {
       else{
         await this.equipamentoService.editar(this.form.value);
       }
+      this.toastrService.success("O equipamento foi salvo com sucesso!", "Gerenciamento de Equipamentos");
     }
     catch(error){
-      console.log(error);
+      if(error != "fechar" && error != "0"  && error != "1" )
+      this.toastrService.error("Houve um erro ao salvar o equipamento. Tente novamente", "Gerenciamento de Equipamentos")
     }
   }
 
-  public remover(departamento: Equipamento){
-    this.equipamentoService.excluir(departamento);
+  public async remover(departamento: Equipamento){
+
+    try{
+      await this.equipamentoService.excluir(departamento);
+
+      this.toastrService.success("O equipamento foi excluido com sucesso!", "Gerenciamento de Equipamentos");
+    }
+    catch(error){
+      if(error != "fechar" && error != "0"  && error != "1" )
+      this.toastrService.error("Houve um erro ao excluir o equipamento. Tente novamente", "Gerenciamento de Equipamentos")
+    }
   }
 }
