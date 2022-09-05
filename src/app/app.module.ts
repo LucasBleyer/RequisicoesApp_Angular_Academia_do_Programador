@@ -24,6 +24,7 @@ import { LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core'
 import { ToastrModule } from 'ngx-toastr';
 
 import{ BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FuncionarioModule } from './funcionarios/funcionario.module';
 
 registerLocaleData(ptBr);
 
@@ -45,6 +46,7 @@ registerLocaleData(ptBr);
 
     DepartamentoModule,
     EquipamentoModule,
+    FuncionarioModule,
 
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FuncionarioRoutingModule } from './funcionario-routing.module';
 import { FuncionarioComponent } from './funcionario.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { FuncionarioComponent } from './funcionario.component';
   ],
   imports: [
     CommonModule,
-    FuncionarioRoutingModule
+    FuncionarioRoutingModule,
+
+    ReactiveFormsModule
   ]
 })
 export class FuncionarioModule { }
