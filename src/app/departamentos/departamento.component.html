@@ -68,20 +68,30 @@
   <form [formGroup]="form" (ngSubmit)="modal.close('cadastrar')">
     <div class="modal-body">
 
-      <div class="form-group mb-3">
+      <div class="form-group mb-3 position-relative">
         <label for="nome" class="form-label">Nome do departamento:</label>
         <input formControlName="nome"
+        [ngClass]="(nome?.touched && nome?.invalid) ? 'is-invalid' : '' "
         class="form-control border-danger"
         type="text"
         placeholder="Digite o nome do seu departamento...">
+        <div class="invalid-tooltip" *ngIf="nome?.touched && nome?.invalid">
+          <span *ngIf="nome?.errors?.['required']">O nome deve ser preenchido.</span>
+          <span *ngIf="nome?.errors?.['minlength']">O nome deve ter no mínimo 3 caracteres.</span>
+        </div>
       </div>
 
-      <div class="form-group mb-3">
+      <div class="form-group mb-3 position-relative">
         <label for="telefone" class="form-label">Telefone do departamento:</label>
         <input formControlName="telefone"
+        [ngClass]="(telefone?.touched && telefone?.invalid) ? 'is-invalid' : '' "
         class="form-control border-danger"
         type="text"
         placeholder="Digite o número de telefone do seu departamento...">
+        <div class="invalid-tooltip" *ngIf="telefone?.touched && telefone?.invalid">
+          <span *ngIf="telefone?.errors?.['required']">O telefone deve ser preenchido.</span>
+          <span *ngIf="telefone?.errors?.['maxlength']">O telefone deve ter no máximo 15 caracteres.</span>
+        </div>
       </div>
 
       <div class="modal-footer">

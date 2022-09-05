@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -27,10 +27,10 @@ export class EquipamentoComponent implements OnInit {
 
     this.form = this.fb.group({
       id: new FormControl(""),
-      numeroSerie: new FormControl(""),
-      nome: new FormControl(""),
-      preco: new FormControl(""),
-      dataFabricacao: new FormControl("")
+      numeroSerie: new FormControl("", [Validators.required, Validators.minLength(3)]),
+      nome: new FormControl("", [Validators.required, Validators.minLength(3)]),
+      preco: new FormControl("", [Validators.required]),
+      dataFabricacao: new FormControl("", [Validators.required])
     })
   }
 
@@ -38,23 +38,23 @@ export class EquipamentoComponent implements OnInit {
     return this.id?.value ? "Atualização" : "Cadastro";
   }
 
-  get id(){
+  get id(): AbstractControl | null{
     return this.form.get("id");
   }
 
-  get numeroSerie(){
+  get numeroSerie(): AbstractControl | null{
     return this.form.get("numeroSerie");
   }
 
-  get nome(){
+  get nome(): AbstractControl | null{
     return this.form.get("nome");
   }
 
-  get preco(){
+  get preco(): AbstractControl | null{
     return this.form.get("preco");
   }
 
-  get dataFabricacao(){
+  get dataFabricacao(): AbstractControl | null{
     return this.form.get("dataFabricacao");
   }
 
