@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/f
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { Departamento } from '../departamentos/models/departamento.models';
 import { DepartamentoService } from '../departamentos/services/departamento.service';
 import { Funcionario } from './models/funcionario.model';
 import { FuncionarioService } from './services/funcionario.service';
@@ -14,6 +15,8 @@ import { FuncionarioService } from './services/funcionario.service';
 export class FuncionarioComponent implements OnInit {
 
   public funcionarios$: Observable<Funcionario[]>;
+  public departamentos$: Observable<Departamento[]>;
+
   public form: FormGroup;
 
   constructor(
@@ -33,6 +36,9 @@ export class FuncionarioComponent implements OnInit {
       departamentoId: new FormControl(""),
       departamento: new FormControl(""),
     })
+
+    this.funcionarios$ = this.funcionarioService.selecionarTodos();
+    this.departamentos$ = this.departamentoService.selecionarTodos();
   }
 
   get tituloModal():string {
