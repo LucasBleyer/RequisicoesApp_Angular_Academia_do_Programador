@@ -72,39 +72,60 @@
   <form [formGroup]="form" (ngSubmit)="modal.close('cadastrar')">
     <div class="modal-body">
 
-      <div class="form-group mb-3">
+      <div class="form-group mb-3 position-relative">
         <label for="nome" class="form-label">Nome do funcionário:</label>
         <input formControlName="nome"
+        [ngClass]="(nome?.touched && nome?.invalid) ? 'is-invalid' : '' "
         class="form-control border-danger"
         type="text"
         placeholder="Digite o nome do funcionário...">
+        <div class="invalid-tooltip" *ngIf="nome?.touched && nome?.invalid">
+          <span *ngIf="nome?.errors?.['required']">O nome precisa ser preenchido.</span>
+          <span *ngIf="nome?.errors?.['minlength']">O nome deve ter no mínimo 3 caracteres.</span>
+        </div>
       </div>
 
-      <div class="form-group mb-3">
+      <div class="form-group mb-3 position-relative">
         <label for="email" class="form-label">Email do funcionário:</label>
         <input formControlName="email"
+        [ngClass]="(email?.touched && email?.invalid) ? 'is-invalid' : '' "
         class="form-control border-danger"
         type="email"
         placeholder="Digite o email do funcionário...">
+        <div class="invalid-tooltip" *ngIf="email?.touched && email?.invalid">
+          <span *ngIf="email?.errors?.['required']">O email precisa ser preenchido.</span>
+          <span *ngIf="email?.errors?.['email']">O email deve ter um formato válido.</span>
+        </div>
       </div>
 
-      <div class="form-group mb-3">
+      <div class="form-group mb-3 position-relative">
         <label for="funcao" class="form-label">Função do funcionário:</label>
         <input formControlName="funcao"
+        [ngClass]="(funcao?.touched && funcao?.invalid) ? 'is-invalid' : '' "
         class="form-control border-danger"
         type="funcao"
         placeholder="Digite o função do funcionário...">
+        <div class="invalid-tooltip" *ngIf="funcao?.touched && funcao?.invalid">
+          <span *ngIf="funcao?.errors?.['required']">A função precisa ser preenchida.</span>
+          <span *ngIf="funcao?.errors?.['minlength']">A função deve ter no mínimo 3 caracteres.</span>
+        </div>
       </div>
 
-      <div class="form-group mb-3">
+      <div class="form-group mb-3 position-relative">
         <label for="departamentoId" class="form-label">Departamento do funcionário:</label>
-        <ng-select forControlName="departamentoId" [clearable]="false" [searchable]="false">
+        <ng-select forControlName="departamentoId"
+          [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : '' "
+          [clearable]="false"
+          [searchable]="false">
           <ng-option
           *ngFor="let departamento of (departamentos$ | async)"
           [value]="departamento.id">
             {{ departamento.nome }}
           </ng-option>
         </ng-select>
+        <div class="invalid-tooltip" *ngIf="departamentoId?.touched && departamentoId?.invalid">
+          <span *ngIf="departamentoId?.errors?.['required']">O departamento precisa ser selecionado.</span>
+        </div>
       </div>
 
       <div class="modal-footer">
