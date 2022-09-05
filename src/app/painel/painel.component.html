@@ -5,23 +5,26 @@
           <div class="p-2 pt-5 p-md-5 mb-4 rounded-3">
             <div class="container">
 
-              <h1 class="display-6 fw-bold">
+              <h1 class="display-6 fw-bold text-center">
                 Olá, <span class="text-danger">{{ emailUsuario }}</span>
               </h1>
 
-              <p class="fs-4 mt-4">
+              <p class="fs-4 mt-4 text-center">
                 Seja bem-vindo ao Sistema de Requisições do <span class="text-danger fw-bolder">Lucas Bleyer</span>
               </p>
 
-              <div class="d-grid d-lg-flex text-center gap-2 mt-5">
-                <button type="button" class="btn btn-danger" routerLink="/departamentos">Gerenciar Departamentos</button>
-                <button type="button" class="btn btn-danger" routerLink="/equipamentos">Gerenciar Equipamentos</button>
-                <button type="button" class="btn btn-danger" routerLink="/funcionarios">Gerenciar Funcionários</button>
-                <button type="button" class="btn btn-outline-danger" (click)="sair()">Sair</button>
+              <img class="w-50 d-flex mx-auto" src="../../assets/banner.svg">
+
+              <div class="m-4 d-flex flex-column w-auto mx-auto">
+                <button type="button" class="m-1 btn btn-danger" routerLink="/departamentos">Gerenciar Departamentos</button>
+                <button type="button" class="m-1 btn btn-danger" routerLink="/equipamentos">Gerenciar Equipamentos</button>
+                <button type="button" class="m-1 btn btn-danger" routerLink="/funcionarios">Gerenciar Funcionários</button>
               </div>
+
             </div>
           </div>
         </div>
     </div>
   </div>
 </div>
+
