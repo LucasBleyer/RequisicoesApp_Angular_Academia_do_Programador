@@ -54,7 +54,15 @@ export class FuncionarioComponent implements OnInit {
     this.form.reset();
 
     if(funcionario){
-      this.form.setValue(funcionario);
+      const departamento = funcionario.departamento ? funcionario.departamento : null;
+
+      //spread operator
+      const funcionarioCompleto = {
+        ...funcionario,
+        departamento
+      }
+
+      this.form.setValue(funcionarioCompleto);
     }
 
     try{
