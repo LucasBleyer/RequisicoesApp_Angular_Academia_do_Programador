@@ -33,7 +33,7 @@ export class FuncionarioComponent implements OnInit {
       nome: new FormControl("",[Validators.required, Validators.minLength(3)]),
       email: new FormControl("",[Validators.required, Validators.email]),
       funcao: new FormControl("",[Validators.required, Validators.minLength(3)]),
-      departamentoId: new FormControl("",[Validators.required]),
+      departamentoId: new FormControl(""),
       departamento: new FormControl(""),
     })
 

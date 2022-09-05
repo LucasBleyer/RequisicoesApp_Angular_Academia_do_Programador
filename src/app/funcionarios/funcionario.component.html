@@ -38,7 +38,7 @@
               <td>{{funcionario.nome}}</td>
               <td>{{funcionario.email}}</td>
               <td>{{funcionario.funcao}}</td>
-              <td>{{funcionario.departamento}}</td>
+              <td>{{funcionario.departamento?.nome}}</td>
               <td class="d-grid d-md-block">
                 <button
                 (click)="cadastrar(modal, funcionario)"
@@ -113,7 +113,7 @@
 
       <div class="form-group mb-3 position-relative">
         <label for="departamentoId" class="form-label">Departamento do funcionário:</label>
-        <ng-select forControlName="departamentoId"
+        <ng-select formControlName="departamentoId"
           [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : '' "
           [clearable]="false"
           [searchable]="false">
