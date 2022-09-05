@@ -14,7 +14,7 @@ export class AuthenticationService {
     this.usuarioLogado = auth.authState;
   }
 
-  public login(email: string, password: string) : Promise<firebase.auth.UserCredential>{
+  public login(email: string, password: string): Promise<firebase.auth.UserCredential>{
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -24,5 +24,9 @@ export class AuthenticationService {
 
   public resetarSenha(email: string): Promise<void>{
     return this.auth.sendPasswordResetEmail(email)
+  }
+
+  public cadastrar(email: string, senha: string) : Promise<firebase.auth.UserCredential>{
+    return this.auth.createUserWithEmailAndPassword(email, senha);
   }
 }
