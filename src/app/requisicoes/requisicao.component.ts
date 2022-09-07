@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { Departamento } from '../departamentos/models/departamento.models';
 import { DepartamentoService } from '../departamentos/services/departamento.service';
+import { Equipamento } from '../equipamentos/models/equipamento.models';
+import { EquipamentoService } from '../equipamentos/service/equipamento.service';
 import { Requisicao } from './models/requisicao.model';
 import { RequisicaoService } from './service/requisicao.service';
 
@@ -17,12 +19,14 @@ export class RequisicaoComponent implements OnInit {
 
   public requisicoes$: Observable<Requisicao[]>;
   public departamentos$: Observable<Departamento[]>;
+  public equipamentos$: Observable<Equipamento[]>;
 
   public form: FormGroup;
 
   constructor(
     private requisicaoService: RequisicaoService,
     private departamentoService: DepartamentoService,
+    private equipamentoService: EquipamentoService,
     private fb: FormBuilder,
     private modalService: NgbModal,
     private toastrService: ToastrService
@@ -32,17 +36,18 @@ export class RequisicaoComponent implements OnInit {
     this.form = this.fb.group({
       funcionario: new FormGroup({
         id: new FormControl(""),
-        nome: new FormControl("",[Validators.required, Validators.minLength(3)]),
-        email: new FormControl("",[Validators.required, Validators.email]),
-        funcao: new FormControl("",[Validators.required, Validators.minLength(3)]),
+        descricao: new FormControl("",[Validators.required, Validators.minLength(3)]),
+        dataAbertura: new FormControl("",[Validators.required]),
         departamentoId: new FormControl("",[Validators.required]),
-        departamento: new FormControl("")
-      }),
-      senha: new FormControl("")
+        departamento: new FormControl(""),
+        equipamentoId: new FormControl("",[Validators.required]),
+        equipamento: new FormControl("")
+      })
     })
 
     this.requisicoes$ = this.requisicaoService.selecionarTodos();
     this.departamentos$ = this.departamentoService.selecionarTodos();
+    this.equipamentos$ = this.equipamentoService.selecionarTodos();
   }
 
   get tituloModal():string {
@@ -53,18 +58,21 @@ export class RequisicaoComponent implements OnInit {
     return this.form.get("requisicao.id");
   }
 
-  get dataAbertura(): AbstractControl | null{
-    return this.form.get("requisicao.dataAbertura");
-  }
-
   get descricao(): AbstractControl | null{
     return this.form.get("requisicao.descricao");
+  }
+
+  get dataAbertura(): AbstractControl | null{
+    return this.form.get("requisicao.dataAbertura");
   }
 
   get departamentoId(): AbstractControl | null{
     return this.form.get("requisicao.departamentoId");
   }
 
+  get equipamentoId(): AbstractControl | null{
+    return this.form.get("requisicao.equipamentoId");
+  }
 
   public async cadastrar(modal: TemplateRef<any>, requisicao?: Requisicao){
 
@@ -72,11 +80,13 @@ export class RequisicaoComponent implements OnInit {
 
     if(requisicao){
       const departamento = requisicao.departamento ? requisicao.departamento : null;
+      const equipamento = requisicao.equipamento ? requisicao.equipamento : null;
 
       //spread operator
       const requisicaoCompleta = {
         ...requisicao,
-        departamento
+        departamento,
+        equipamento
       }
 
       this.form.get("requisicao")?.setValue(requisicaoCompleta);
@@ -104,7 +114,7 @@ export class RequisicaoComponent implements OnInit {
     }
     catch(error){
       if(error != "fechar" && error != "0"  && error != "1" )
-      this.toastrService.error("Houve um erro ao salvar o funcionário. Tente novamente", "Gerenciamento de Requisições")
+      this.toastrService.error("Houve um erro ao salvar a requisição. Tente novamente", "Gerenciamento de Requisições")
     }
   }
 
