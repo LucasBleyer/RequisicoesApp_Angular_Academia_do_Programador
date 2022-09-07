@@ -1,1 +1,149 @@
-<p>requisicao works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-10 col-lg-9 mt-5 mx-auto">
+
+      <div class="text-center text-md-start">
+        <h1 class="text-light fw-bold">Requisições</h1>
+      </div>
+
+      <div class="d-grid gap-2 d-md-block mt-4">
+        <button
+        (click)="cadastrar(modal)"
+        type="button"
+        class="btn btn-light me-md-1 col-md-2 text-danger">
+        <i class="pi pi-user-plus me-2"></i>
+        Novo
+        </button>
+
+        <a
+        type="button"
+        class="btn btn-light me-md-1 col-md-2 text-danger"
+        routerLink="/painel">
+        Voltar
+        </a>
+      </div>
+      <div class="mt-5">
+        <table class="table table-light table-striped table-hover">
+          <thead class="text-danger">
+            <tr class="text-center">
+              <th>Data de Abertura</th>
+              <th>Departamento</th>
+              <th>Descrição</th>
+              <th>Equipamento</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngFor="let requisicao of (requisicoes$ | async)">
+              <td>{{requisicao.dataAbertura}}</td>
+              <td>{{requisicao.departamento?.nome}}</td>
+              <td>{{requisicao.descricao}}</td>
+              <td>{{requisicao.departamento?.nome}}</td>
+              <td class="d-grid d-md-block">
+                <button
+                (click)="cadastrar(modal, requisicao)"
+                type="button"
+                class="btn btn-danger me-0 me-md-1 mb-md-auto"
+                >
+                <i class="pi pi-user-edit"></i>
+                </button>
+                <button
+                (click)="remover(requisicao)"
+                type="button"
+                class="btn btn-danger"
+                >
+                <i class="pi pi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" class="text-danger">{{tituloModal}} de Requisição</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Fechar')"></button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="modal.close('cadastrar')">
+    <div class="modal-body">
+
+      <!-- <div formGroupName="funcionario">
+        <div class="form-group mb-3 position-relative">
+          <label for="nome" class="form-label">Nome do funcionário:</label>
+          <input formControlName="nome"
+          [ngClass]="(nome?.touched && nome?.invalid) ? 'is-invalid' : '' "
+          class="form-control border-danger"
+          type="text"
+          placeholder="Digite o nome do funcionário...">
+          <div class="invalid-tooltip" *ngIf="nome?.touched && nome?.invalid">
+            <span *ngIf="nome?.errors?.['required']">O nome precisa ser preenchido.</span>
+            <span *ngIf="nome?.errors?.['minlength']">O nome deve ter no mínimo 3 caracteres.</span>
+          </div>
+        </div>
+
+        <div class="form-group mb-3 position-relative">
+          <label for="email" class="form-label">Email do funcionário:</label>
+          <input formControlName="email"
+          [ngClass]="(email?.touched && email?.invalid) ? 'is-invalid' : '' "
+          class="form-control border-danger"
+          type="email"
+          placeholder="Digite o email do funcionário...">
+          <div class="invalid-tooltip" *ngIf="email?.touched && email?.invalid">
+            <span *ngIf="email?.errors?.['required']">O email precisa ser preenchido.</span>
+            <span *ngIf="email?.errors?.['email']">O email deve ter um formato válido.</span>
+          </div>
+        </div>
+
+        <div class="form-group mb-3 position-relative">
+          <label for="funcao" class="form-label">Função do funcionário:</label>
+          <input formControlName="funcao"
+          [ngClass]="(funcao?.touched && funcao?.invalid) ? 'is-invalid' : '' "
+          class="form-control border-danger"
+          type="funcao"
+          placeholder="Digite o função do funcionário...">
+          <div class="invalid-tooltip" *ngIf="funcao?.touched && funcao?.invalid">
+            <span *ngIf="funcao?.errors?.['required']">A função precisa ser preenchida.</span>
+            <span *ngIf="funcao?.errors?.['minlength']">A função deve ter no mínimo 3 caracteres.</span>
+          </div>
+        </div>
+
+        <div class="form-group mb-3 position-relative">
+          <label for="departamentoId" class="form-label">Departamento do funcionário:</label>
+          <ng-select formControlName="departamentoId"
+            [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : '' "
+            [clearable]="false"
+            [searchable]="false">
+            <ng-option
+            *ngFor="let departamento of (departamentos$ | async)"
+            [value]="departamento.id">
+              {{ departamento.nome }}
+            </ng-option>
+          </ng-select>
+          <div class="invalid-tooltip" *ngIf="departamentoId?.touched && departamentoId?.invalid">
+            <span *ngIf="departamentoId?.errors?.['required']">O departamento precisa ser selecionado.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group.mb-3" *ngIf="!this.id?.value">
+        <label for="senha" class="form-label">Senha:</label>
+          <input formControlName="senha"
+          [ngClass]="(senha?.touched && senha?.invalid) ? 'is-invalid' : '' "
+          class="form-control border-danger"
+          type="password"
+          placeholder="Digite o senha do funcionário...">
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
+        <button type="submit" class="btn btn-danger col-md-3">Cadastrar</button>
+      </div> -->
+
+    </div>
+  </form>
+</ng-template>

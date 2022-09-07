@@ -50,28 +50,21 @@ export class RequisicaoComponent implements OnInit {
   }
 
   get id(): AbstractControl | null{
-    return this.form.get("funcionario.id");
+    return this.form.get("requisicao.id");
   }
 
-  get nome(): AbstractControl | null{
-    return this.form.get("funcionario.nome");
+  get dataAbertura(): AbstractControl | null{
+    return this.form.get("requisicao.dataAbertura");
   }
 
-  get email(): AbstractControl | null{
-    return this.form.get("funcionario.email");
-  }
-
-  get funcao(): AbstractControl | null{
-    return this.form.get("funcionario.funcao");
+  get descricao(): AbstractControl | null{
+    return this.form.get("requisicao.descricao");
   }
 
   get departamentoId(): AbstractControl | null{
-    return this.form.get("funcionario.departamentoId");
+    return this.form.get("requisicao.departamentoId");
   }
 
-  get senha(): AbstractControl | null{
-    return this.form.get("senha");
-  }
 
   public async cadastrar(modal: TemplateRef<any>, requisicao?: Requisicao){
 
