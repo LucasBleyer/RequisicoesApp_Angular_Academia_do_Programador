@@ -26,7 +26,7 @@
         <table class="table table-light table-striped table-hover">
           <thead class="text-danger">
             <tr class="text-center">
-              <th>Data de Abertura</th>
+              <th>Abertura</th>
               <th>Departamento</th>
               <th>Descrição</th>
               <th>Equipamento</th>
@@ -35,24 +35,23 @@
           </thead>
           <tbody class="text-center">
             <tr *ngFor="let requisicao of (requisicoes$ | async)">
-              <td>{{requisicao.dataAbertura.getDate() | date: 'dd/MM/yyyy'}}</td>
+              <td>{{requisicao.dataAbertura.toDate() | date: "dd/MM/yyyy"}}</td>
               <td>{{requisicao.departamento?.nome}}</td>
               <td>{{requisicao.descricao}}</td>
               <td>{{requisicao.equipamento?.nome}}</td>
               <td class="d-grid d-md-block">
                 <button
-                (click)="cadastrar(modal, requisicao)"
-                type="button"
-                class="btn btn-danger me-0 me-md-1 mb-md-auto"
-                >
-                <i class="pi pi-user-edit"></i>
+                 (click)="cadastrar(modal, requisicao)"
+                  type="button"
+                  class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">
+                  <i class="pi pi-user-edit"></i>
                 </button>
+
                 <button
                 (click)="remover(requisicao)"
-                type="button"
-                class="btn btn-danger"
-                >
-                <i class="pi pi-trash"></i>
+                  type="button"
+                  class="btn btn-outline-danger">
+                  <i class="pi pi-trash"></i>
                 </button>
               </td>
             </tr>
@@ -65,67 +64,54 @@
 
 <ng-template #modal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" class="text-danger">{{tituloModal}} de Requisição</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Fechar')"></button>
+    <h4 class="modal-title" id="modal-basic-title" class="text-danger">{{ tituloModal }} de Requisições</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
   </div>
-  <form [formGroup]="form" (ngSubmit)="modal.close('cadastrar')">
+  <form [formGroup]="form" (ngSubmit)="modal.close('gravar')">
     <div class="modal-body">
 
       <div class="form-group mb-3 position-relative">
-        <label for="departamentoId" class="form-label">Departamento do funcionário:</label>
+        <label for="departamentoId" class="form-label">Departamento</label>
         <ng-select formControlName="departamentoId"
-          [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : '' "
-          [clearable]="false"
-          [searchable]="false">
-          <ng-option
-          *ngFor="let departamento of (departamentos$ | async)"
-          [value]="departamento.id">
-            {{ departamento.nome }}
+        [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
+        [clearable]="false"
+        [searchable]="false">
+          <ng-option *ngFor="let departamento of (departamentos$ | async)" [value]="departamento.id">
+            {{departamento.nome}}
           </ng-option>
         </ng-select>
         <div class="invalid-tooltip" *ngIf="departamentoId?.touched && departamentoId?.invalid">
-          <span *ngIf="departamentoId?.errors?.['required']">O departamento precisa ser selecionado.</span>
+          <span *ngIf="departamentoId?.errors?.['required']" >O departamento precisa ser selecionado</span>
         </div>
       </div>
 
-      <div formGroupName="requisicao">
-        <div class="form-group mb-3 position-relative">
-          <label for="descricao" class="form-label">Descrição da requisição:</label>
-          <textarea formControlName="descricao"
-          [ngClass]="(descricao?.touched && descricao?.invalid) ? 'is-invalid' : '' "
-          class="form-control border-danger"
-          type="text"
-          placeholder="Digite a descrição da requisição...">
-          </textarea>
-          <div class="invalid-tooltip" *ngIf="descricao?.touched && descricao?.invalid">
-            <span *ngIf="descricao?.errors?.['required']">A descrição precisa ser preenchida.</span>
-            <span *ngIf="descricao?.errors?.['minlength']">A descrição deve ter no mínimo 3 caracteres.</span>
-          </div>
-        </div>
-      </div>
+      <div class="form-group mb-3 position-relative">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea formControlName = "descricao"
+        [ngClass]="(descricao?.touched && descricao?.invalid) ? 'is-invalid' : ''"
+        style="resize: none; height: 18vh;"
+        class="form-control border-danger"
+        type="text"
+        placeholder="Digite a descrição"></textarea>
+     </div>
 
-      <!-- <div class="form-group mb-3 position-relative">
-        <label for="equipamentoId" class="form-label">Equipamento da requisição:</label>
-        <ng-select formControlName="equipamentoId"
-          [ngClass]="(equipamentoId?.touched && equipamentoId?.invalid) ? 'is-invalid' : '' "
-          [clearable]="false"
-          [searchable]="false">
-          <ng-option
-          *ngFor="let equipamento of (equipamentos$ | async)"
-          [value]="equipamento.id">
-            {{ equipamento.nome }}
-          </ng-option>
-        </ng-select>
-        <div class="invalid-tooltip" *ngIf="equipamentoId?.touched && equipamentoId?.invalid">
-          <span *ngIf="equipamentoId?.errors?.['required']">O equipamento precisa ser selecionado.</span>
-        </div>
-      </div> -->
+     <label for="equipamentoId" class="form-label">Equipamento</label>
+     <ng-select formControlName="equipamentoId"
+     [ngClass]="(equipamentoId?.touched && equipamentoId?.invalid) ? 'is-invalid' : ''"
+     [clearable]="false"
+     [searchable]="false">
+       <ng-option *ngFor="let equipamento of (equipamentos$ | async)" [value]="equipamento.id">
+         {{equipamento.nome}}
+       </ng-option>
+     </ng-select>
+     <div class="invalid-tooltip" *ngIf="equipamentoId?.touched && equipamentoId?.invalid">
+       <span *ngIf="equipamentoId?.errors?.['required']" >Selecione um equipamento</span>
+     </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
         <button type="submit" class="btn btn-danger col-md-3">Cadastrar</button>
       </div>
-
     </div>
   </form>
 </ng-template>

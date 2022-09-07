@@ -3,10 +3,12 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from '../auth/services/authentication.service';
 import { Departamento } from '../departamentos/models/departamento.models';
 import { DepartamentoService } from '../departamentos/services/departamento.service';
 import { Equipamento } from '../equipamentos/models/equipamento.models';
 import { EquipamentoService } from '../equipamentos/service/equipamento.service';
+import { FuncionarioService } from '../funcionarios/services/funcionario.service';
 import { Requisicao } from './models/requisicao.model';
 import { RequisicaoService } from './service/requisicao.service';
 
@@ -18,116 +20,116 @@ export class RequisicaoComponent implements OnInit {
 
   public requisicoes$: Observable<Requisicao[]>;
   public departamentos$: Observable<Departamento[]>;
-  //public equipamentos$: Observable<Equipamento[]>;
+  public equipamentos$: Observable<Equipamento[]>;
 
   public form: FormGroup;
 
   constructor(
-    private requisicaoService: RequisicaoService,
+    private requisicoesService: RequisicaoService,
     private departamentoService: DepartamentoService,
-    //private equipamentoService: EquipamentoService,
-    private fb: FormBuilder,
+    private equipamentoService: EquipamentoService,
     private modalService: NgbModal,
-    private toastrService: ToastrService
-    ) { }
+    private fb: FormBuilder,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
+
+
     this.form = this.fb.group({
-      funcionario: new FormGroup({
-        id: new FormControl(""),
-        descricao: new FormControl("",[Validators.required, Validators.minLength(5)]),
-        dataAbertura: new FormControl(""),
-        departamentoId: new FormControl("",[Validators.required]),
-        departamento: new FormControl("")
-        // equipamentoId: new FormControl("",[Validators.required]),
-        // equipamento: new FormControl("")
-      })
-    })
+      id: new FormControl(""),
+      dataDeAbertura: new FormControl(""),
+      departamentoId: new FormControl(""),
+      departamento: new FormControl(""),
+      descricao: new FormControl(""),
+      equipamentoId: new FormControl(""),
+      equipamento: new FormControl(""),
+      funcionarioId: new FormControl(""),
+      funcionario: new FormControl(""),
+    }
+    )
 
-    this.requisicoes$ = this.requisicaoService.selecionarTodos();
+    // this.requisicoes$ = this.requisicoesService.selecionarTodos();
     this.departamentos$ = this.departamentoService.selecionarTodos();
-    //this.equipamentos$ = this.equipamentoService.selecionarTodos();
+    this.equipamentos$ = this.equipamentoService.selecionarTodos();
+
   }
 
-  get tituloModal():string {
-    return this.id?.value ? "Atualização" : "Cadastro";
+  get tituloModal(): string {
+    return this.id?.value ? "Atualização" : "Cadastro"
   }
 
-  get id(): AbstractControl | null{
-    return this.form.get("requisicao.id");
+  get id() {
+    return this.form.get("id");
   }
 
-  get descricao(): AbstractControl | null{
-    return this.form.get("requisicao.descricao");
+  get dataDeAbertura() {
+    return this.form.get("dataDeAbertura");
   }
 
-  get dataAbertura(): AbstractControl | null{
-    return this.form.get("requisicao.dataAbertura");
+  get departamentoId() {
+    return this.form.get("departamentoId");
   }
 
-  get departamentoId(): AbstractControl | null{
-    return this.form.get("requisicao.departamentoId");
+  get departamento() {
+    return this.form.get("departamento");
   }
 
-  // get equipamentoId(): AbstractControl | null{
-  //   return this.form.get("requisicao.equipamentoId");
-  // }
+  get descricao() {
+    return this.form.get("descricao");
+  }
 
-  public async cadastrar(modal: TemplateRef<any>, requisicao?: Requisicao){
+  get equipamentoId() {
+    return this.form.get("equipamentoId");
+  }
 
+  get equipamento() {
+    return this.form.get("equipamento");
+  }
+
+
+  public async cadastrar(modal: TemplateRef<any>, requisicao?: Requisicao) {
     this.form.reset();
 
     if(requisicao){
       const departamento = requisicao.departamento ? requisicao.departamento : null;
-      //const equipamento = requisicao.equipamento ? requisicao.equipamento : null;
+      const equipamento = requisicao.equipamento ? requisicao.equipamento : null;
 
-      //spread operator
-      const requisicaoCompleta = {
+     const requisicaoCompleta = {
         ...requisicao,
-        departamento
-        //equipamento
+        departamento,
+        equipamento
       }
-
       this.form.get("requisicao")?.setValue(requisicaoCompleta);
     }
-
-    try{
+    try {
       await this.modalService.open(modal).result;
 
-      if(this.form.dirty && this.form.valid)
-      {
-        if(!requisicao)
-        {
-          await this.requisicaoService.inserir(this.form.get("requisicao")?.value);
-        }
-        else
-        {
-          await this.requisicaoService.editar(this.form.get("requisicao")?.value);
-        }
-        this.toastrService.success("A requisição foi salva com sucesso!", "Gerenciamento de Requisições");
+      if(!requisicao){
+        await this.requisicoesService.inserir(this.form.value);
+        this.toastr.success("Requisição inserida com sucesso!");
       }
-      else
-      {
-        this.toastrService.error("A requisição precisa ser preenchida!", "Gerenciamento de Requisições")
+      else{
+        await this.requisicoesService.editar(this.form.value);
+        this.toastr.success("Requisição editada com sucesso!");
       }
-    }
-    catch(error){
-      if(error != "fechar" && error != "0"  && error != "1" )
-      this.toastrService.error("Houve um erro ao salvar a requisição. Tente novamente", "Gerenciamento de Requisições")
+    } catch (error) {
+      console.log(error);
+
+      if(error != "fechar" && error != "0" && error != "1")
+        this.toastr.error("Houve um erro ao salvar a requisição. Tente novamente.")
     }
   }
 
-  public async remover(requisicao: Requisicao){
+  public async remover(requisicao: Requisicao) {
 
-    try{
-      await this.requisicaoService.excluir(requisicao);
+    try {
+      this.requisicoesService.excluir(requisicao);
+      this.toastr.success("Requisição excluída com sucesso!");
 
-      this.toastrService.success("A requisição foi excluida com sucesso!", "Gerenciamento de Requisições");
-    }
-    catch(error){
-      if(error != "fechar" && error != "0"  && error != "1" )
-      this.toastrService.error("Houve um erro ao excluir a requisição. Tente novamente", "Gerenciamento de Requisições")
+    } catch (error) {
+      if(error != "fechar" && error != "0" && error != "1")
+        this.toastr.error("Houve um erro ao excluir a requisição. Tente novamente.")
     }
   }
-
 }
