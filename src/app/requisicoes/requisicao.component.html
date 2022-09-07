@@ -35,7 +35,7 @@
           </thead>
           <tbody class="text-center">
             <tr *ngFor="let requisicao of (requisicoes$ | async)">
-              <td>{{requisicao.dataAbertura | date: 'dd/MM/yyyy'}}</td>
+              <td>{{requisicao.dataAbertura.getDate() | date: 'dd/MM/yyyy'}}</td>
               <td>{{requisicao.departamento?.nome}}</td>
               <td>{{requisicao.descricao}}</td>
               <td>{{requisicao.equipamento?.nome}}</td>
