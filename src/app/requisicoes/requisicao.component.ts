@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../auth/services/authentication.service';
 import { Departamento } from '../departamentos/models/departamento.models';
 import { DepartamentoService } from '../departamentos/services/departamento.service';
 import { Equipamento } from '../equipamentos/models/equipamento.models';
@@ -39,17 +38,13 @@ export class RequisicaoComponent implements OnInit {
     this.form = this.fb.group({
       id: new FormControl(""),
       dataDeAbertura: new FormControl(""),
-      departamentoId: new FormControl(""),
+      departamentoId: new FormControl("",[Validators.required]),
       departamento: new FormControl(""),
       descricao: new FormControl(""),
-      equipamentoId: new FormControl(""),
-      equipamento: new FormControl(""),
-      funcionarioId: new FormControl(""),
-      funcionario: new FormControl(""),
+      equipamentoId: new FormControl("",[Validators.required]),
+      equipamento: new FormControl("")
     }
     )
-
-    // this.requisicoes$ = this.requisicoesService.selecionarTodos();
     this.departamentos$ = this.departamentoService.selecionarTodos();
     this.equipamentos$ = this.equipamentoService.selecionarTodos();
 

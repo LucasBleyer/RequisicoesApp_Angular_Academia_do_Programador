@@ -73,9 +73,9 @@
       <div class="form-group mb-3 position-relative">
         <label for="departamentoId" class="form-label">Departamento</label>
         <ng-select formControlName="departamentoId"
-        [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
-        [clearable]="false"
-        [searchable]="false">
+          [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
+          [clearable]="false"
+          [searchable]="false">
           <ng-option *ngFor="let departamento of (departamentos$ | async)" [value]="departamento.id">
             {{departamento.nome}}
           </ng-option>
@@ -88,21 +88,22 @@
       <div class="form-group mb-3 position-relative">
         <label for="descricao" class="form-label">Descrição</label>
         <textarea formControlName = "descricao"
-        [ngClass]="(descricao?.touched && descricao?.invalid) ? 'is-invalid' : ''"
-        style="resize: none; height: 18vh;"
-        class="form-control border-danger"
-        type="text"
-        placeholder="Digite a descrição"></textarea>
-     </div>
+          [ngClass]="(descricao?.touched && descricao?.invalid) ? 'is-invalid' : ''"
+          style="resize: none; height: 18vh;"
+          class="form-control border-danger"
+          type="text"
+          placeholder="Digite a descrição">
+        </textarea>
+      </div>
 
      <label for="equipamentoId" class="form-label">Equipamento</label>
      <ng-select formControlName="equipamentoId"
-     [ngClass]="(equipamentoId?.touched && equipamentoId?.invalid) ? 'is-invalid' : ''"
-     [clearable]="false"
-     [searchable]="false">
-       <ng-option *ngFor="let equipamento of (equipamentos$ | async)" [value]="equipamento.id">
-         {{equipamento.nome}}
-       </ng-option>
+      [ngClass]="(equipamentoId?.touched && equipamentoId?.invalid) ? 'is-invalid' : ''"
+      [clearable]="false"
+      [searchable]="false">
+        <ng-option *ngFor="let equipamento of (equipamentos$ | async)" [value]="equipamento.id">
+          {{equipamento.nome}}
+        </ng-option>
      </ng-select>
      <div class="invalid-tooltip" *ngIf="equipamentoId?.touched && equipamentoId?.invalid">
        <span *ngIf="equipamentoId?.errors?.['required']" >Selecione um equipamento</span>
