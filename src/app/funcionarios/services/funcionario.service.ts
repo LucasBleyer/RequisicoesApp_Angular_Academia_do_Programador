@@ -15,7 +15,6 @@ export class FuncionarioService {
     this.registros = this.firestore.collection<Funcionario>("funcionarios");
   }
 
-  //estou com problema para atualizar a tabela
   public selecionarTodos(): Observable<Funcionario[]>{
     return this.registros.valueChanges()
     .pipe(

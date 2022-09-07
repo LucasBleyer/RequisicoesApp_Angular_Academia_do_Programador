@@ -1,6 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -19,14 +18,14 @@ export class RequisicaoComponent implements OnInit {
 
   public requisicoes$: Observable<Requisicao[]>;
   public departamentos$: Observable<Departamento[]>;
-  public equipamentos$: Observable<Equipamento[]>;
+  //public equipamentos$: Observable<Equipamento[]>;
 
   public form: FormGroup;
 
   constructor(
     private requisicaoService: RequisicaoService,
     private departamentoService: DepartamentoService,
-    private equipamentoService: EquipamentoService,
+    //private equipamentoService: EquipamentoService,
     private fb: FormBuilder,
     private modalService: NgbModal,
     private toastrService: ToastrService
@@ -36,18 +35,18 @@ export class RequisicaoComponent implements OnInit {
     this.form = this.fb.group({
       funcionario: new FormGroup({
         id: new FormControl(""),
-        descricao: new FormControl("",[Validators.required, Validators.minLength(3)]),
-        dataAbertura: new FormControl("",[Validators.required]),
+        descricao: new FormControl("",[Validators.required, Validators.minLength(5)]),
+        dataAbertura: new FormControl(""),
         departamentoId: new FormControl("",[Validators.required]),
-        departamento: new FormControl(""),
-        equipamentoId: new FormControl("",[Validators.required]),
-        equipamento: new FormControl("")
+        departamento: new FormControl("")
+        // equipamentoId: new FormControl("",[Validators.required]),
+        // equipamento: new FormControl("")
       })
     })
 
     this.requisicoes$ = this.requisicaoService.selecionarTodos();
     this.departamentos$ = this.departamentoService.selecionarTodos();
-    this.equipamentos$ = this.equipamentoService.selecionarTodos();
+    //this.equipamentos$ = this.equipamentoService.selecionarTodos();
   }
 
   get tituloModal():string {
@@ -70,9 +69,9 @@ export class RequisicaoComponent implements OnInit {
     return this.form.get("requisicao.departamentoId");
   }
 
-  get equipamentoId(): AbstractControl | null{
-    return this.form.get("requisicao.equipamentoId");
-  }
+  // get equipamentoId(): AbstractControl | null{
+  //   return this.form.get("requisicao.equipamentoId");
+  // }
 
   public async cadastrar(modal: TemplateRef<any>, requisicao?: Requisicao){
 
@@ -80,13 +79,13 @@ export class RequisicaoComponent implements OnInit {
 
     if(requisicao){
       const departamento = requisicao.departamento ? requisicao.departamento : null;
-      const equipamento = requisicao.equipamento ? requisicao.equipamento : null;
+      //const equipamento = requisicao.equipamento ? requisicao.equipamento : null;
 
       //spread operator
       const requisicaoCompleta = {
         ...requisicao,
-        departamento,
-        equipamento
+        departamento
+        //equipamento
       }
 
       this.form.get("requisicao")?.setValue(requisicaoCompleta);
