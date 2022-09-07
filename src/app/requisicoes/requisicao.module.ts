@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { RequisicaoRoutingModule } from './requisicao-routing.module';
 import { RequisicaoComponent } from './requisicao.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -11,7 +13,11 @@ import { RequisicaoComponent } from './requisicao.component';
   ],
   imports: [
     CommonModule,
-    RequisicaoRoutingModule
+    RequisicaoRoutingModule,
+
+    ReactiveFormsModule,
+
+    NgSelectModule
   ]
 })
 export class RequisicaoModule { }

@@ -5,7 +5,7 @@ export class Requisicao {
   id: string;
   descricao: string;
   dataAbertura: Date;
-  departamentoId: String;
+  departamentoId: string;
   departamento?: Departamento;
   equipamentoId: string;
   equipamento?: Equipamento;
