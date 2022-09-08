@@ -90,29 +90,36 @@ export class RequisicaoComponent implements OnInit {
       const departamento = requisicao.departamento ? requisicao.departamento : null;
       const equipamento = requisicao.equipamento ? requisicao.equipamento : null;
 
-     const requisicaoCompleta = {
+      //spread operator
+      const requisicaoCompleta = {
         ...requisicao,
         departamento,
         equipamento
       }
+
       this.form.get("requisicao")?.setValue(requisicaoCompleta);
     }
+
     try {
       await this.modalService.open(modal).result;
 
-      if(!requisicao){
+      if(!requisicao)
+      {
         await this.requisicoesService.inserir(this.form.value);
-        this.toastr.success("Requisição inserida com sucesso!");
+        this.toastr.success("A requisição foi inserida com sucesso!" , "Gerenciamento de Requisições");
       }
-      else{
+      else
+      {
         await this.requisicoesService.editar(this.form.value);
-        this.toastr.success("Requisição editada com sucesso!");
+        this.toastr.success("A requisição foi editada com sucesso!" , "Gerenciamento de Requisições");
       }
-    } catch (error) {
+    }
+    catch (error)
+    {
       console.log(error);
 
       if(error != "fechar" && error != "0" && error != "1")
-        this.toastr.error("Houve um erro ao salvar a requisição. Tente novamente.")
+        this.toastr.error("Houve um erro ao salvar a requisição. Tente novamente." , "Gerenciamento de Requisições")
     }
   }
 
@@ -120,11 +127,12 @@ export class RequisicaoComponent implements OnInit {
 
     try {
       this.requisicoesService.excluir(requisicao);
-      this.toastr.success("Requisição excluída com sucesso!");
-
-    } catch (error) {
+      this.toastr.success("A requisição foi excluída com sucesso!" , "Gerenciamento de Requisições");
+    }
+    catch (error)
+    {
       if(error != "fechar" && error != "0" && error != "1")
-        this.toastr.error("Houve um erro ao excluir a requisição. Tente novamente.")
+        this.toastr.error("Houve um erro ao excluir a requisição. Tente novamente.", "Gerenciamento de Requisições")
     }
   }
 }

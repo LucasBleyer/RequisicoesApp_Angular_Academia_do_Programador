@@ -25,16 +25,14 @@ export class RequisicaoService {
             .collection<Departamento>("departamentos")
             .doc(requisicao.departamentoId)
             .valueChanges()
-            .subscribe(x => requisicao.departamento = x
-              )
+            .subscribe(x => requisicao.departamento = x)
 
             if(requisicao.equipamentoId){
             this.firestore
             .collection<Equipamento>("equipamentos")
             .doc(requisicao.equipamentoId)
             .valueChanges()
-            .subscribe(x => requisicao.equipamento = x
-              )
+            .subscribe(x => requisicao.equipamento = x)
             }
           });
           return requisicoes;
@@ -47,11 +45,8 @@ export class RequisicaoService {
       return Promise.reject("item inválido");
 
     const res = await this.registros.add(registro);
-
     registro.id = res.id;
-
     this.registros.doc(res.id).set(registro);
-
  }
 
  public async editar(registro: Requisicao): Promise<void> {
@@ -60,7 +55,6 @@ export class RequisicaoService {
 
 public excluir(registro: Requisicao): Promise<void> {
   return this.registros.doc(registro.id).delete();
-
  }
 
 }
