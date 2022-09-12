@@ -21,6 +21,7 @@ export class RequisicaoComponent implements OnInit {
   public departamentos$: Observable<Departamento[]>;
   public equipamentos$: Observable<Equipamento[]>;
 
+  public funcionarioLogadoId: string;
   public form: FormGroup;
 
   constructor(
