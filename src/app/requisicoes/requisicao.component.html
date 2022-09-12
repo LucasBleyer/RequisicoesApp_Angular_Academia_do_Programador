@@ -96,18 +96,20 @@
         </textarea>
       </div>
 
-     <label for="equipamentoId" class="form-label">Equipamento</label>
-     <ng-select formControlName="equipamentoId"
-      [ngClass]="(equipamentoId?.touched && equipamentoId?.invalid) ? 'is-invalid' : ''"
-      [clearable]="false"
-      [searchable]="false">
-        <ng-option *ngFor="let equipamento of (equipamentos$ | async)" [value]="equipamento.id">
-          {{equipamento.nome}}
-        </ng-option>
-     </ng-select>
-     <div class="invalid-tooltip" *ngIf="equipamentoId?.touched && equipamentoId?.invalid">
-       <span *ngIf="equipamentoId?.errors?.['required']" >Selecione um equipamento</span>
-     </div>
+      <div class="form-group mb-3 position-relative">
+        <label for="equipamentoId" class="form-label">Equipamento</label>
+        <ng-select formControlName="equipamentoId"
+          [ngClass]="(equipamentoId?.touched && equipamentoId?.invalid) ? 'is-invalid' : ''"
+          [clearable]="false"
+          [searchable]="false">
+            <ng-option *ngFor="let equipamento of (equipamentos$ | async)" [value]="equipamento.id">
+              {{equipamento.nome}}
+            </ng-option>
+        </ng-select>
+        <div class="invalid-tooltip" *ngIf="equipamentoId?.touched && equipamentoId?.invalid">
+          <span *ngIf="equipamentoId?.errors?.['required']" >Selecione um equipamento</span>
+        </div>
+      </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
