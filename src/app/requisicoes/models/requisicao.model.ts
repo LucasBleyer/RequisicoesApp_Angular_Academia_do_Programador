@@ -6,8 +6,13 @@ export class Requisicao {
   id: string;
   descricao: string;
   dataAbertura: Date | any;
+
+  funcionarioId: string;
+  funcionario: Funcionario;
+
   departamentoId: string;
   departamento?: Departamento;
+
   equipamentoId?: string;
   equipamento?: Equipamento;
 }
