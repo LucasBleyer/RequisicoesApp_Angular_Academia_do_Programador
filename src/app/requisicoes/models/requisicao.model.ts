@@ -8,7 +8,7 @@ export class Requisicao {
   dataAbertura: Date | any;
 
   funcionarioId: string;
-  funcionario: Funcionario;
+  funcionario?: Funcionario;
 
   departamentoId: string;
   departamento?: Departamento;

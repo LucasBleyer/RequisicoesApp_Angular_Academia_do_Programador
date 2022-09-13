@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { map, Observable } from 'rxjs';
 import { Departamento } from 'src/app/departamentos/models/departamento.models';
 import { Equipamento } from 'src/app/equipamentos/models/equipamento.models';
+import { Funcionario } from 'src/app/funcionarios/models/funcionario.model';
 import { Requisicao } from '../models/requisicao.model';
 
 @Injectable({
@@ -18,27 +19,38 @@ export class RequisicaoService {
   public selecionarTodos(): Observable<Requisicao[]> {
     return this.registros.valueChanges()
     .pipe(
-        map((requisicoes: Requisicao[]) => {
-          requisicoes.forEach(requisicao => {
+      map(requisicoes => {
+        requisicoes.forEach(req => {
+          this.firestore.collection<Departamento>("departamentos")
+          .doc(req.departamentoId)
+          .valueChanges()
+          .subscribe(d => req.departamento = d);
 
-            this.firestore
-            .collection<Departamento>("departamentos")
-            .doc(requisicao.departamentoId)
-            .valueChanges()
-            .subscribe(x => requisicao.departamento = x)
+          this.firestore.collection<Funcionario>("funcionarios")
+          .doc(req.funcionarioId)
+          .valueChanges()
+          .subscribe(f => req.funcionario = f);
 
-            if(requisicao.equipamentoId){
-            this.firestore
-            .collection<Equipamento>("equipamentos")
-            .doc(requisicao.equipamentoId)
+          if (req.equipamentoId) {
+            this.firestore.collection<Equipamento>("equipamentos")
+            .doc(req.equipamentoId)
             .valueChanges()
-            .subscribe(x => requisicao.equipamento = x)
-            }
-          });
-          return requisicoes;
+            .subscribe(e => req.equipamento = e);
+          }
+        });
+        return requisicoes;
+      })
+    );
+  }
+
+  public selecionarRequisicoesFuncionarioAtual(id: string) {
+    return this.selecionarTodos()
+      .pipe(
+        map(requisicoes => {
+          return requisicoes.filter(req => req.funcionarioId === id);
         })
       )
-    }
+  }
 
   public async inserir(registro: Requisicao): Promise<any> {
     if(!registro)
@@ -56,5 +68,4 @@ export class RequisicaoService {
 public excluir(registro: Requisicao): Promise<void> {
   return this.registros.doc(registro.id).delete();
  }
-
 }

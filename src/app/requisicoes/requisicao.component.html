@@ -38,19 +38,19 @@
               <td>{{requisicao.dataAbertura.toDate() | date: "dd/MM/yyyy"}}</td>
               <td>{{requisicao.departamento?.nome}}</td>
               <td>{{requisicao.descricao}}</td>
-              <td>{{requisicao.equipamento?.nome}}</td>
+              <td>{{requisicao.equipamento ? requisicao.equipamento.nome : "Não Selecionado"}}</td>
               <td class="d-grid d-md-block">
                 <button
                  (click)="cadastrar(modal, requisicao)"
                   type="button"
-                  class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">
+                  class="btn btn-danger me-0 me-md-1 mb-1 mb-md-auto">
                   <i class="pi pi-user-edit"></i>
                 </button>
 
                 <button
                 (click)="remover(requisicao)"
                   type="button"
-                  class="btn btn-outline-danger">
+                  class="btn btn-danger">
                   <i class="pi pi-trash"></i>
                 </button>
               </td>
@@ -71,13 +71,15 @@
     <div class="modal-body">
 
       <div class="form-group mb-3 position-relative">
-        <label for="departamentoId" class="form-label">Departamento</label>
-        <ng-select formControlName="departamentoId"
+        <label for="departamentoId" class="form-label">Departamento destino:</label>
+        <ng-select
+          formControlName="departamentoId"
           [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
           [clearable]="false"
-          [searchable]="false">
-          <ng-option *ngFor="let departamento of (departamentos$ | async)" [value]="departamento.id">
-            {{departamento.nome}}
+          [searchable]="false"
+          class="w-75">
+          <ng-option *ngFor="let departamento of (departamentos$ | async)"
+            [value]="departamento.id">{{departamento.nome}}
           </ng-option>
         </ng-select>
         <div class="invalid-tooltip" *ngIf="departamentoId?.touched && departamentoId?.invalid">
@@ -86,19 +88,9 @@
       </div>
 
       <div class="form-group mb-3 position-relative">
-        <label for="descricao" class="form-label">Descrição</label>
-        <textarea formControlName = "descricao"
-          [ngClass]="(descricao?.touched && descricao?.invalid) ? 'is-invalid' : ''"
-          style="resize: none; height: 18vh;"
-          class="form-control border-danger"
-          type="text"
-          placeholder="Digite a descrição">
-        </textarea>
-      </div>
-
-      <div class="form-group mb-3 position-relative">
-        <label for="equipamentoId" class="form-label">Equipamento</label>
-        <ng-select formControlName="equipamentoId"
+        <label for="equipamentoId" class="form-label">Equipamento (opcional)</label>
+        <ng-select
+          formControlName="equipamentoId"
           [ngClass]="(equipamentoId?.touched && equipamentoId?.invalid) ? 'is-invalid' : ''"
           [clearable]="false"
           [searchable]="false">
@@ -109,6 +101,18 @@
         <div class="invalid-tooltip" *ngIf="equipamentoId?.touched && equipamentoId?.invalid">
           <span *ngIf="equipamentoId?.errors?.['required']" >Selecione um equipamento</span>
         </div>
+      </div>
+
+      <div class="form-group mb-3 position-relative">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea
+          formControlName = "descricao"
+          [ngClass]="(descricao?.touched && descricao?.invalid) ? 'is-invalid' : ''"
+          style="resize: none; height: 18vh;"
+          class="form-control border-danger"
+          type="text"
+          placeholder="Digite a descrição do seu problema">
+        </textarea>
       </div>
 
       <div class="modal-footer">
