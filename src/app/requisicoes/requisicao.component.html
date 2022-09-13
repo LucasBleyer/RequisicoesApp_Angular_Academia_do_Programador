@@ -1,124 +1,22 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 col-md-10 col-lg-9 mt-5 mx-auto">
-
-      <div class="text-center text-md-start">
-        <h1 class="text-light fw-bold">Requisições</h1>
-      </div>
-
-      <div class="d-grid gap-2 d-md-block mt-4">
+    <div class="mt-5 col-12 col-md-10 col-lg-9 mx-auto mt-2 mb-5">
+      <div class="btn-group">
         <button
-        (click)="cadastrar(modal)"
-        type="button"
-        class="btn btn-light me-md-1 col-md-2 text-danger">
-        <i class="pi pi-user-plus me-2"></i>
-        Novo
+          routerLink="/requisicoes/funcionario"
+          routerLinkActive="active"
+          class="btn btn-outline-primary"
+          aria-current="page">
+          <i class="pi pi-ticket me-1"></i>Minhas requisições
         </button>
-
-        <a
-        type="button"
-        class="btn btn-light me-md-1 col-md-2 text-danger"
-        routerLink="/painel">
-        Voltar
-        </a>
-      </div>
-      <div class="mt-5">
-        <table class="table table-light table-striped table-hover">
-          <thead class="text-danger">
-            <tr class="text-center">
-              <th>Abertura</th>
-              <th>Departamento</th>
-              <th>Descrição</th>
-              <th>Equipamento</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody class="text-center">
-            <tr *ngFor="let requisicao of (requisicoes$ | async)">
-              <td>{{requisicao.dataAbertura.toDate() | date: "dd/MM/yyyy"}}</td>
-              <td>{{requisicao.departamento?.nome}}</td>
-              <td>{{requisicao.descricao}}</td>
-              <td>{{requisicao.equipamento ? requisicao.equipamento.nome : "Não Selecionado"}}</td>
-              <td class="d-grid d-md-block">
-                <button
-                 (click)="cadastrar(modal, requisicao)"
-                  type="button"
-                  class="btn btn-danger me-0 me-md-1 mb-1 mb-md-auto">
-                  <i class="pi pi-user-edit"></i>
-                </button>
-
-                <button
-                (click)="remover(requisicao)"
-                  type="button"
-                  class="btn btn-danger">
-                  <i class="pi pi-trash"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <button
+          routerLink="/requisicoes/departamento"
+          routerLinkActive="active"
+          class="btn btn-outline-primary"><i class="pi pi-inbox me-1"></i>Requisições para meu Departamento
+        </button>
       </div>
     </div>
   </div>
 </div>
 
-<ng-template #modal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" class="text-danger">{{ tituloModal }} de Requisições</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
-  </div>
-  <form [formGroup]="form" (ngSubmit)="modal.close('gravar')">
-    <div class="modal-body">
-
-      <div class="form-group mb-3 position-relative">
-        <label for="departamentoId" class="form-label">Departamento destino:</label>
-        <ng-select
-          formControlName="departamentoId"
-          [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
-          [clearable]="false"
-          [searchable]="false"
-          class="w-75">
-          <ng-option *ngFor="let departamento of (departamentos$ | async)"
-            [value]="departamento.id">{{departamento.nome}}
-          </ng-option>
-        </ng-select>
-        <div class="invalid-tooltip" *ngIf="departamentoId?.touched && departamentoId?.invalid">
-          <span *ngIf="departamentoId?.errors?.['required']" >O departamento precisa ser selecionado</span>
-        </div>
-      </div>
-
-      <div class="form-group mb-3 position-relative">
-        <label for="equipamentoId" class="form-label">Equipamento (opcional)</label>
-        <ng-select
-          formControlName="equipamentoId"
-          [ngClass]="(equipamentoId?.touched && equipamentoId?.invalid) ? 'is-invalid' : ''"
-          [clearable]="false"
-          [searchable]="false">
-            <ng-option *ngFor="let equipamento of (equipamentos$ | async)" [value]="equipamento.id">
-              {{equipamento.nome}}
-            </ng-option>
-        </ng-select>
-        <div class="invalid-tooltip" *ngIf="equipamentoId?.touched && equipamentoId?.invalid">
-          <span *ngIf="equipamentoId?.errors?.['required']" >Selecione um equipamento</span>
-        </div>
-      </div>
-
-      <div class="form-group mb-3 position-relative">
-        <label for="descricao" class="form-label">Descrição</label>
-        <textarea
-          formControlName = "descricao"
-          [ngClass]="(descricao?.touched && descricao?.invalid) ? 'is-invalid' : ''"
-          style="resize: none; height: 18vh;"
-          class="form-control border-danger"
-          type="text"
-          placeholder="Digite a descrição do seu problema">
-        </textarea>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
-        <button type="submit" class="btn btn-danger col-md-3">Cadastrar</button>
-      </div>
-    </div>
-  </form>
-</ng-template>
+<router-outlet></router-outlet>
