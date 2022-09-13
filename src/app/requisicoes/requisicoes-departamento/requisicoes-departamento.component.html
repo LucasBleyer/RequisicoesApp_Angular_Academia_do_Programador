@@ -14,6 +14,43 @@
           <i class="pi pi-sign-out me-2"></i>Voltar
         </button>
       </div>
+
+      <div class="mt-5">
+        <table class="table table-light table-striped table-hover">
+          <thead class="thead-dark text-center text-danger">
+            <tr>
+              <th>Data de Abertura</th>
+              <th>Departamento</th>
+              <th>Descrição</th>
+              <th>Equipamento</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngFor="let requisicao of (requisicoes$ | async)">
+              <td class="text-center">{{requisicao.dataAbertura.toDate() | date: 'dd/MM/yyyy HH:mm'}}</td>
+              <td class="text-center">{{requisicao.departamento?.nome}}</td>
+              <td class="text-center">{{requisicao.descricao}}</td>
+              <td class="text-center">{{requisicao.equipamento ? requisicao.equipamento.nome : "Não Selecionado"}}</td>
+              <td class="text-center d-grid d-md-block">
+                <button
+                  type="button"
+
+                  class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">
+                  <i class="pi pi-user-edit"></i>
+                </button>
+                <button
+                  type="button"
+                  
+                  class="btn btn-outline-danger">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 </div>
