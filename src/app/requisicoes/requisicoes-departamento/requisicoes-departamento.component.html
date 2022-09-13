@@ -23,6 +23,8 @@
               <th>Departamento</th>
               <th>Descrição</th>
               <th>Equipamento</th>
+              <th>Última Atualização</th>
+              <th>Status</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -32,25 +34,81 @@
               <td class="text-center">{{requisicao.departamento?.nome}}</td>
               <td class="text-center">{{requisicao.descricao}}</td>
               <td class="text-center">{{requisicao.equipamento ? requisicao.equipamento.nome : "Não Selecionado"}}</td>
+              <td class="text-center">{{requisicao.ultimaAtualizacao}}</td>
+              <td class="text-center">{{requisicao.status}}</td>
               <td class="text-center d-grid d-md-block">
                 <button
                   type="button"
-
+                  (click)="cadastrar(modal, requisicao)"
                   class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">
-                  <i class="pi pi-user-edit"></i>
+                  <i class="pi pi-check-square"></i>
                 </button>
                 <button
                   type="button"
-                  
+
                   class="btn btn-outline-danger">
-                  <i class="pi pi-trash"></i>
+                  <i class="pi pi-tags"></i>
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </div>
+
+
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title fw-bolder text-danger">Movimentação de Requisição</h3>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
+  </div>
+  
+  <form [formGroup]="form" (ngSubmit)="modal.close('enviar')">
+    <div class="modal-body">
+      <div class="form-group mb-3 position-relative">
+        <label for="funcionario" class="form-label">Funcionário Solicitante:</label>
+        <p class="text-primary fw-semibold">{{funcionarioLogado.nome}}</p>
+      </div>
+
+      <div class="form-group mb-3 position-relative">
+        <label for="equipamentoId" class="form-label">Equipamento:</label>
+        <p class="fw-semibold">{{requisicaoSelecionada.equipamento ? requisicaoSelecionada.equipamento?.nome : "Não informado"}}</p>
+      </div>
+
+      <div class="form-group mb-3 position-relative">
+        <label for="nome" class="form-label">Descrição da Solicitação:</label>
+        <p class="fw-semibold">{{requisicaoSelecionada.descricao}}</p>
+      </div>
+
+      <hr>
+      <div class="form-group mb-3 position-relative">
+        <label for="status" class="form-label">Status:</label>
+        <ng-select
+          placeholder="Status da requisição"
+          [searchable]="false"
+          [clearable]="false"
+          class="w-50"
+          formControlName="status"
+          [items]="listaStatus">
+        </ng-select>
+      </div>
+
+      <div class="form-group mb-3 position-relative border-danger">
+        <label for="nome" class="form-label">Descrição da Movimentaçã:</label>
+        <textarea formControlName="descricao"
+          class="form-control"
+          type="text"
+          placeholder="Digite a descrição da atualização"></textarea>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
+      <button type="submit" class="btn btn-danger col-md-3">Cadastrar</button>
+    </div>
+
+  </form>
+</ng-template>

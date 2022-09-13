@@ -10,6 +10,7 @@ import { Equipamento } from 'src/app/equipamentos/models/equipamento.models';
 import { EquipamentoService } from 'src/app/equipamentos/service/equipamento.service';
 import { Funcionario } from 'src/app/funcionarios/models/funcionario.model';
 import { FuncionarioService } from 'src/app/funcionarios/services/funcionario.service';
+import { Movimentacao } from '../models/movimentacao.model';
 import { Requisicao } from '../models/requisicao.model';
 import { RequisicaoService } from '../services/requisicao.service';
 
@@ -25,6 +26,8 @@ export class RequisicoesDepartamentoComponent implements OnInit {
   private processoAutenticado$: Subscription;
 
   public funcionarioLogado: Funcionario;
+  public requisicaoSelecionada: Requisicao;
+  public listaStatus: string[] = ["Aberta", "Processando", "Não Autorizada", "Fechada"];
   public form: FormGroup;
 
   constructor(
@@ -65,12 +68,12 @@ export class RequisicoesDepartamentoComponent implements OnInit {
     this.processoAutenticado$.unsubscribe();
   }
 
-  get tituloModal(): string {
-    return this.id?.value ? "Atualização" : "Cadastro";
-  }
-
   get id(): AbstractControl | null {
     return this.form.get("id");
+  }
+
+  get status(): AbstractControl | null {
+    return this.form.get("status");
   }
 
   get departamentoId() {
@@ -81,33 +84,22 @@ export class RequisicoesDepartamentoComponent implements OnInit {
     return this.form.get("descricao");
   }
 
-  public async cadastrar(modal: TemplateRef<any>, requisicao?: Requisicao) {
+  public async cadastrar(modal: TemplateRef<any>, requisicao: Requisicao) {
+    this.requisicaoSelecionada = requisicao;
+    this.requisicaoSelecionada.movimentacoes = requisicao.movimentacoes ? requisicao.movimentacoes : [];
+
+
     this.form.reset();
+
     this.configurarValoresPadrao();
-
-    if (requisicao) {
-      const departamento = requisicao.departamento ? requisicao.departamento : null;
-      const funcionario = requisicao.funcionario ? requisicao.funcionario : null;
-      const equipamento = requisicao.equipamento ? requisicao.equipamento : null;
-
-      const requisicaoCompleta = {
-        ...requisicao,
-        departamento,
-        funcionario,
-        equipamento
-      }
-
-      this.form.setValue(requisicaoCompleta);
-    }
 
     try {
       await this.modalService.open(modal).result;
 
       if (this.form.dirty && this.form.valid) {
-        if (!requisicao)
-          await this.requisicaoService.inserir(this.form.value);
-        else
-          await this.requisicaoService.editar(this.form.value);
+        this.atualizarRequisicao(this.form.value(this.form.value));
+
+        await this.requisicaoService.editar(this.requisicaoSelecionada);
 
         this.toastrService.success(`A requisição foi salva com sucesso!`, "Cadastro de Requisições");
       }
@@ -117,12 +109,18 @@ export class RequisicoesDepartamentoComponent implements OnInit {
       if (error != "fechar" && error != "0" && error != "1")
         this.toastrService.error("Houve um erro ao salvar a requisição. Tente novamente.", "Cadastro de Requisições")
     }
+  }
 
+  private atualizarRequisicao(movimentacao: Movimentacao){
+    this.requisicaoSelecionada.movimentacoes.push(movimentacao);
+    this.requisicaoSelecionada.status = this.status?.value();
+    this.requisicaoSelecionada.ultimaAtualizacao = new Date();
   }
 
   private configurarValoresPadrao(): void {
     this.form.patchValue({
       funcionario: this.funcionarioLogado,
+      status: this.requisicaoSelecionada?.status,
       data: new Date()
     })
   }
