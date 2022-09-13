@@ -45,7 +45,7 @@
                 </button>
                 <button
                   type="button"
-
+                  [routerLink]="['/requisicoes', requisicao.id]"
                   class="btn btn-outline-danger">
                   <i class="pi pi-tags"></i>
                 </button>
@@ -64,7 +64,7 @@
     <h3 class="modal-title fw-bolder text-danger">Movimentação de Requisição</h3>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
   </div>
-  
+
   <form [formGroup]="form" (ngSubmit)="modal.close('enviar')">
     <div class="modal-body">
       <div class="form-group mb-3 position-relative">
