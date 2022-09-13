@@ -8,7 +8,7 @@
 
       <div class="d-grid gap-2 d-md-block mt-4">
         <button
-        (click)="gravar(modal)"
+        (click)="cadastrar(modal)"
         type="button"
         class="btn btn-light me-md-1 col-md-2 text-danger">
         <i class="pi pi-user-plus me-2"></i>
@@ -42,13 +42,13 @@
               <td class="text-center d-grid d-md-block">
                 <button
                   type="button"
-                  (click)="gravar(modal, requisicao)"
+                  (click)="cadastrar(modal, requisicao)"
                   class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">
                   <i class="pi pi-user-edit"></i>
                 </button>
                 <button
                   type="button"
-                  (click)="excluir(requisicao)"
+                  (click)="remover(requisicao)"
                   class="btn btn-outline-danger">
                   <i class="pi pi-trash"></i>
                 </button>

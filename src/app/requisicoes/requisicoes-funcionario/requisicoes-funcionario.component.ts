@@ -90,7 +90,7 @@ export class RequisicoesFuncionarioComponent implements OnInit, OnDestroy {
     return this.form.get("descricao");
   }
 
-  public async gravar(modal: TemplateRef<any>, requisicao?: Requisicao) {
+  public async cadastrar(modal: TemplateRef<any>, requisicao?: Requisicao) {
     this.form.reset();
     this.configurarValoresPadrao();
 
@@ -129,7 +129,7 @@ export class RequisicoesFuncionarioComponent implements OnInit, OnDestroy {
 
   }
 
-  public async excluir(requisicao: Requisicao) {
+  public async remover(requisicao: Requisicao) {
     try {
       await this.requisicaoService.excluir(requisicao);
 
