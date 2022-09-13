@@ -3,27 +3,28 @@
     <!-- Conteúdo principal -->
     <div class="col-12 col-md-10 col-lg-9 mx-auto">
       <div class="text-center text-md-start">
-        <h1 class="fw-bold text-primary">Minhas Requisições</h1>
+        <h1 class="fw-bold text-light">Minhas Requisições</h1>
       </div>
 
       <div class="d-grid gap-2 d-md-block mt-4">
         <button
-          (click)="gravar(modal)"
-          type="button"
-          class="btn btn-primary me-md-1 col-md-2">
-          <i class="pi pi-user-plus me-2"></i>Novo
+        (click)="gravar(modal)"
+        type="button"
+        class="btn btn-light me-md-1 col-md-2 text-danger">
+        <i class="pi pi-user-plus me-2"></i>
+        Novo
         </button>
-        <button
-          role="button"
-          class="btn btn-outline-primary col-md-2"
-          routerLink="/painel">
-          <i class="pi pi-sign-out me-2"></i>Voltar
-        </button>
+        <a
+        type="button"
+        class="btn btn-light me-md-1 col-md-2 text-danger"
+        routerLink="/painel">
+        Voltar
+        </a>
       </div>
 
       <div class="mt-4">
         <table class="table table-light table-striped table-hover">
-          <thead class="thead-dark text-center">
+          <thead class="thead-dark text-center text-danger">
             <tr>
               <th>Data de Abertura</th>
               <th>Departamento</th>
@@ -63,33 +64,25 @@
 
 <ng-template #modal let-modal>
   <div class="modal-header">
-    <h3 class="modal-title fw-bolder">{{ tituloModal }} de Requisição</h3>
+    <h3 class="modal-title fw-bolder text-danger">{{ tituloModal }} de Requisição</h3>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
   </div>
   <form [formGroup]="form" (ngSubmit)="modal.close('enviar')">
     <div class="modal-body">
       <div class="form-group mb-3 position-relative">
         <label for="departamentoId" class="form-label">Departamento destino</label>
-        <!-- <select
-          formControlName="departamentoId"
-          [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
-          class="form-control w-75">
-          <option
-          c
-            *ngFor="let departamento of (departamentos$ | async)"
-            [value]="departamento.id">{{ departamento?.nome }}</option>
-        </select> -->
-        <ng-select
-          [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
-          placeholder="Selecione um departamento"
-          [clearable]="false"
-          [searchable]="false"
-          class="w-75"
-          formControlName="departamentoId">
-          <ng-option
-            *ngFor="let departamento of (departamentos$ | async)"
-            [value]="departamento.id">{{ departamento?.nome }}</ng-option>
-        </ng-select>
+          <ng-select
+            [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
+            placeholder="Selecione um departamento"
+            [clearable]="false"
+            [searchable]="false"
+            class="w-75"
+            formControlName="departamentoId">
+            <ng-option
+              *ngFor="let departamento of (departamentos$ | async)"
+              [value]="departamento.id">{{ departamento?.nome }}
+            </ng-option>
+          </ng-select>
         <div class="invalid-tooltip" *ngIf="departamentoId?.touched && departamentoId?.invalid">
           <span *ngIf="departamentoId?.errors?.['required']">O departamento precisa ser selecionado.</span>
         </div>
@@ -100,8 +93,7 @@
         <ng-select
           placeholder="Selecione um equipamento"
           [searchable]="false"
-          a
-          class="w-75"
+          class="w-75 border-danger"
           formControlName="equipamentoId">
           <ng-option
             *ngFor="let equipamento of (equipamentos$ | async)"
@@ -113,7 +105,8 @@
         <label for="nome" class="form-label">Descrição</label>
         <textarea formControlName="descricao"
           [ngClass]="(descricao?.touched && descricao?.invalid) ? 'is-invalid' : ''"
-          class="form-control"
+          style="resize: none; height: 20vh;"
+          class="form-control border-danger"
           type="text"
           placeholder="Digite a descrição do seu problema"></textarea>
           <div class="invalid-tooltip" *ngIf="descricao?.touched && descricao?.invalid">
@@ -123,13 +116,11 @@
       </div>
 
     </div>
+
     <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-primary col-md-3"
-        (click)="modal.dismiss('fechar')">
-        Cancelar</button>
-      <button type="submit" class="btn btn-primary col-md-3" [disabled]="this.form.invalid">Salvar</button>
+      <button type="button" class="btn btn-outline-danger col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
+      <button type="submit" class="btn btn-danger col-md-3">Cadastrar</button>
     </div>
+
   </form>
 </ng-template>
